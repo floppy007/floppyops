@@ -1,0 +1,8 @@
+# Everything except public-facing files
+*
+
+# Allow these files
+!README.md
+!LICENSE
+!.gitignore
+!CHANGELOG.md
