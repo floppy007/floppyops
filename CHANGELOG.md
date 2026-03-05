@@ -5,10 +5,44 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ## [Unreleased]
 
+## [0.9.7-beta1] - 2026-03-05
+
+### Added
+- PVE Failed Tasks: Fehlgeschlagene PVE-Tasks (qmigrate, vzdump, etc.) automatisch im Systemlog erfassen
+  - Neue Methode `getFailedTasks()` in ProxmoxAPIService (PVE API: `/nodes/{node}/tasks?errors=1`)
+  - UPID-basierte Deduplizierung in `persistFailedTasks()` (keine Duplikate bei wiederholtem Abruf)
+  - SSE-Zyklus: Alle 600 Zyklen (Offset 450) automatisch abgerufen
+  - Source `pve-task` in `server_error_logs`, automatisch im Systemlog sichtbar via UNION-Query
+- **Runtime Integrity Guard**: Automatische Erkennung von Code-Manipulation bei jedem Auth-Request
+  - Prüft 4 kritische Dateien (index.php, AuthMiddleware, IntegrityService, LicenseService)
+  - mtime-first Strategie: Fast-Path ~0.3ms, Worst-Case ~3ms
+  - 60-Sekunden-Throttle für Performance
+  - Admin-Banner bei Manipulation erkannt (mit Dismiss-Button)
+- **License-bound Phone-Home**: Integritäts-Status an Release-Server melden
+  - Periodischer Report als Piggyback im Update-Check (alle 24h)
+  - Emergency Report bei akuter Manipulation (max 1x/Stunde, fire-and-forget)
+  - Release-Server kann Force-Check und Admin-Nachrichten zurückgeben
+- **Automatisches Lizenz-Downgrade**: Bei Code-Tampering wird Lizenz auf Community herabgestuft
+  - Release-Server prüft Fingerprint gegen Integrity-Reports
+  - Downgrade wirkt bei nächster Online-Lizenz-Validierung
+  - Admin-Reset im Release-Server Admin-Panel für false positives
+  - Warning-Banner in Settings > Lizenz bei aktivem Downgrade
+- Release-Server: Integrity-Reports in Lizenzen-Admin-Seite integriert (3. Tab mit Filtern + Downgrade-Reset)
+
+### Changed
+- Auto-Update UI: Cron-Dropdowns (Tag + Uhrzeit) statt Freitext-Eingabe für App- und Agent-Auto-Update
+- Auto-Update Auto-Save: Toggle und Dropdown-Änderungen werden sofort gespeichert (kein Save-Button)
+- Agent Auto-Update Default: Standard auf AN geändert (war AUS)
+
+### Fixed
+- `tools/update.php`: APP_VERSION wird jetzt korrekt aus index.php geladen (CLI-Bug behoben)
+- Error-Log Timestamp-Regex: Unterstützt jetzt `+01:00` Format zusätzlich zu `+0100` (verhinderte Duplikate)
+- UpdateController: Ungenutzten PbsServer Import entfernt
+
 ## [0.9.5-beta2] - 2026-03-03
 
 ### Added
-- Sicherheits- & Einrichtungswarnungen (Nextcloud-Style): 12 System-Checks in Settings > Allgemein
+- Sicherheits- & Einrichtungswarnungen :12 System-Checks in Settings > Allgemein
   - Default-Passwort aktiv, fehlende PHP-Extensions, nicht beschreibbare Verzeichnisse
   - PHP-Version < 8.1, Cron nicht aktiv, Disk-Speicher knapp, display_errors aktiv
   - HTTPS nicht aktiv, gepatchte Dateien, Mail nicht konfiguriert, Update verfügbar
