@@ -5,6 +5,26 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ## [Unreleased]
 
+## [0.9.7-beta5] - 2026-03-05
+
+### Added
+- **Community-Aktivierungspflicht**: 30-Tage-Frist nach Erstinstallation, danach Registrierung oder Lizenzschluessel erforderlich
+  - Standalone Aktivierungsseite (`/activation`) sperrt alle Routen nach Ablauf
+  - API-Routes bleiben erreichbar (Aktivierungsformular funktioniert weiterhin)
+  - Countdown-Banner in Settings > Lizenz zeigt verbleibende Tage
+- **E-Mail-Verifizierung**: Community-Registrierung erfordert 6-stelligen Code per E-Mail
+  - Code-Anforderung via `floppyops.com/api/community/request-code`
+  - Verifizierung via `floppyops.com/api/community/verify-code`
+  - Rate-Limit: max 3 Codes pro E-Mail/Stunde, 15 Minuten Gueltigkeit
+- Schema v27: `first_installed_at` Tracking in `app_settings`
+- 26 neue i18n-Keys (`activation.*`, `status.sending`) in EN + DE
+
+### Changed
+- **Lizenz-Tab vereinheitlicht**: Community-Registrierung und Lizenzschluessel-Eingabe in einer Karte mit Tab-Umschaltung
+  - Registrierte Community-User sehen Upgrade-Option direkt
+  - Aktive Lizenz-Info und Deaktivierung in gleicher Karte
+- Community-Registrierung nutzt jetzt E-Mail-Verifizierung statt direkter Registrierung
+
 ## [0.9.7-beta4] - 2026-03-05
 
 ### Added
