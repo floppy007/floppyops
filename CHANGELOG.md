@@ -5,6 +5,32 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ## [Unreleased]
 
+## [0.9.7-beta4] - 2026-03-05
+
+### Added
+- **Inline Integrity Guard**: Unabhaengiger Hash-Check von LicenseService.php direkt in index.php
+  - SHA256-Hash wird beim Build injiziert (GUARD_HASH_LICENSE Konstante)
+  - Erkennt LicenseService-Manipulation auch wenn IntegrityService gehackt wurde
+  - Im Dev-Modus inaktiv (leerer Hash = kein Check)
+- **Page Transition Loader**: Spinner-Overlay beim Seitenwechsel und Refresh
+  - Aktiviert bei internen Link-Klicks und Formular-Submits
+  - bfcache-kompatibel (pageshow Event)
+- **Umfangreiche Test-Suite**: 224 Unit-Tests + 19 Integrations-Tests
+  - IntegrityService: 28 Tests (check, runtimeGuard, guardCache, verifyDownload, systemCheck)
+  - UpdateService: 33 Tests (Lock-Management, Maintenance, Protected Paths, Backups)
+  - UpdateCheckService: 12 Tests (Cache, Channel-Erkennung)
+  - PatchService: 20 Tests (State-Management, Rollback, Hash-Verifikation)
+  - Integrations-Test: 19 Tests gegen Live-Test-Server (Login, Manipulation, Detection, Exclusion)
+- **Tests im Release-Workflow**: PHPUnit wird automatisch vor dem Build ausgefuehrt, Abbruch bei Fehlern
+
+### Changed
+- Update-Backups: Limit von 5 auf 10 erhoeht
+- Update-Backups Card zeigt max. 5 Eintraege, Link zu voller Backup-Uebersicht
+- Neue eigene Seite fuer alle Backups (Settings > Backups) mit Tabellen-Layout
+- Build-Script: Neuer Step 6b fuer Inline-Guard Hash-Injection
+
+## [0.9.7-beta2] - 2026-03-05
+
 ## [0.9.7-beta1] - 2026-03-05
 
 ### Added
