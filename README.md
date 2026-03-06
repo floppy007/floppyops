@@ -8,6 +8,8 @@
 
 Manage every PVE and PBS node from a single pane of glass. Built for sysadmins who run Proxmox in production.
 
+**Free to use** — 30-day trial after installation, then just register for a free Community license. Email verification with 6-digit code. No credit card, no hidden costs.
+
 > **[Deutsche Version weiter unten](#deutsch)**
 
 ---
@@ -38,14 +40,32 @@ A lightweight Python agent runs on each node. The PVE API handles monitoring and
 ### Notifications & Alerts
 SMTP and Microsoft 365 Graph API support. Define custom alert rules for CPU, RAM, disk, reboot-required, SMART errors, and replication failures. Fully customizable email templates.
 
-### Security & Networking
-SSL/TLS with Let's Encrypt (HTTP-01 + Cloudflare DNS-01), manual certificate upload, built-in DDNS (IPv4 + IPv6), code integrity verification (RSA-signed), and maintenance mode during updates.
+### Code Integrity & Security
+Automatic detection of code manipulation on every auth request. RSA-signed manifests verify all files. License-bound phone-home reporting flags tampering attempts. Runtime integrity guard protects the running system.
+
+### Networking & SSL
+SSL/TLS with Let's Encrypt (HTTP-01 + Cloudflare DNS-01), manual certificate upload, built-in DDNS (IPv4 + IPv6), and maintenance mode during updates.
 
 ### Access Control & Audit
 Three roles (Admin, Operator, Viewer) with granular permissions. System-wide activity log with filters, full-text search, and export to CSV, PDF, JSON, or Syslog.
 
 ### Branding & Themes
 Dark and light themes with standard and compact layouts. Enterprise users can white-label with custom logo, colors, and app name.
+
+---
+
+## Roadmap
+
+| Version | Feature | Tier |
+|---------|---------|------|
+| **v1.0.0** | VM/CT Provisioning — step-by-step wizard for creating VMs and containers | All |
+| **v1.1** | Firewall Management — PVE firewall rules and security groups | Pro+ |
+| **v1.2** | NAS Storage — Synology and QNAP integration | Pro+ |
+| **v1.3** | Notification Channels — Slack, Teams, Telegram, Discord | Pro+ |
+| **v1.4** | 2FA/TOTP + REST API & Webhooks | All / Enterprise+ |
+| **v1.5+** | LDAP/AD, HA Management, Scheduled Reports, Ceph, Ansible GUI | Enterprise+ |
+
+Full roadmap: [floppyops.com/roadmap](https://floppyops.com/roadmap)
 
 ---
 
@@ -85,6 +105,8 @@ All website submissions are automatically synced to GitHub Issues.
 
 Verwalte jeden PVE- und PBS-Node von einer einzigen Oberflaeche. Entwickelt fuer Sysadmins, die Proxmox produktiv betreiben.
 
+**Kostenlos nutzbar** — 30-Tage-Testphase nach Installation, danach einfach kostenlose Community-Lizenz registrieren. E-Mail-Verifizierung per 6-stelligem Code. Keine Kreditkarte, keine versteckten Kosten.
+
 ### Monitoring & Dashboard
 Live-Uebersicht aller Proxmox-Nodes — CPU, RAM, Disk, Netzwerk — nach Standort und Cluster gruppiert. Server-Sent Events halten alles in Echtzeit synchron. Anpassbares Widget-Dashboard mit Drag & Drop und Vollbild-Kiosk-Modus fuer Monitoring-Waende.
 
@@ -109,14 +131,32 @@ Ein leichtgewichtiger Python-Agent laeuft auf jedem Node. Die PVE-API uebernimmt
 ### Benachrichtigungen & Alerts
 SMTP- und Microsoft-365-Graph-API-Unterstuetzung. Alert-Regeln fuer CPU, RAM, Disk, Reboot-Required, SMART-Fehler und Replikations-Fehler definieren. Vollstaendig anpassbare E-Mail-Templates.
 
-### Sicherheit & Netzwerk
-SSL/TLS mit Let's Encrypt (HTTP-01 + Cloudflare DNS-01), manueller Zertifikat-Upload, integrierter DDNS-Service (IPv4 + IPv6), Code-Integritaetspruefung (RSA-signiert) und Wartungsmodus bei Updates.
+### Code-Integritaet & Sicherheit
+Automatische Erkennung von Code-Manipulation bei jedem Auth-Request. RSA-signierte Manifeste pruefen alle Dateien. Lizenzgebundenes Phone-Home Reporting meldet Manipulationsversuche. Runtime Integrity Guard schuetzt das laufende System.
+
+### Netzwerk & SSL
+SSL/TLS mit Let's Encrypt (HTTP-01 + Cloudflare DNS-01), manueller Zertifikat-Upload, integrierter DDNS-Service (IPv4 + IPv6) und Wartungsmodus bei Updates.
 
 ### Zugriffskontrolle & Audit
 Drei Rollen (Admin, Operator, Viewer) mit granularen Berechtigungen. Systemweites Aktivitaetslog mit Filtern, Volltextsuche und Export als CSV, PDF, JSON oder Syslog.
 
 ### Branding & Themes
 Dark- und Light-Theme mit Standard- und Kompakt-Layout. Enterprise-Nutzer koennen Logo, Farben und App-Name individuell anpassen.
+
+---
+
+### Roadmap
+
+| Version | Feature | Tier |
+|---------|---------|------|
+| **v1.0.0** | VM/CT Provisioning — Schritt-fuer-Schritt Wizard zum Erstellen von VMs und Containern | Alle |
+| **v1.1** | Firewall Management — PVE-Firewall-Regeln und Security Groups | Pro+ |
+| **v1.2** | NAS Storage — Synology- und QNAP-Integration | Pro+ |
+| **v1.3** | Benachrichtigungs-Kanaele — Slack, Teams, Telegram, Discord | Pro+ |
+| **v1.4** | 2FA/TOTP + REST API & Webhooks | Alle / Enterprise+ |
+| **v1.5+** | LDAP/AD, HA Management, Scheduled Reports, Ceph, Ansible GUI | Enterprise+ |
+
+Vollstaendige Roadmap: [floppyops.com/roadmap](https://floppyops.com/roadmap)
 
 ---
 
