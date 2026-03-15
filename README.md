@@ -34,6 +34,18 @@ Schedule scrubs and trims per pool, monitor SMART health data, track pool status
 ### ZFS Replication (Enterprise+)
 Cross-node ZFS replication with automated incremental send/receive. Flexible scheduling, bandwidth limiting, snapshot retention policies, real-time progress tracking, and email alerts on failures.
 
+### UPS Monitoring (Pro+)
+Monitor UPS devices via Network UPS Tools (NUT). Battery charge, runtime, load, input/output voltage, temperature — with instant email alerts on power events (on battery, low battery, offline). Dashboard fleet tile and automated shutdown rules.
+
+### Network Management
+Full PVE network interface management. View and manage bridges, bonds, VLANs and physical NICs across all cluster nodes. Pending changes workflow, live traffic monitoring (RX/TX per interface), and network topology overview.
+
+### Live Health Alerts & Storage Monitoring
+Proactive server monitoring with live PVE API polling. CPU, RAM, disk and storage thresholds are checked automatically with configurable intervals (2–30 minutes). All active storages (ZFS, CIFS, LVM) are monitored against warning/critical thresholds. Server offline detection with automatic status updates and professional HTML email alerts.
+
+### Web Terminal
+Execute commands directly on your Proxmox servers from the FloppyOps web interface — no separate SSH client needed. Secure execution via PVE Agent with TLS and token-based authentication.
+
 ### Agent Architecture
 A lightweight Python agent runs on each node. The PVE API handles monitoring and VM control, while the agent handles system operations (updates, snapshots, ZFS, terminal, replication). SSH is only needed for initial setup.
 
@@ -54,16 +66,30 @@ Dark and light themes with standard and compact layouts. Enterprise users can wh
 
 ---
 
+## Releases
+
+| Version | Codename | Highlights |
+|---------|----------|------------|
+| **v0.9.9** | Health & Monitoring | Live health alerts (PVE API polling), storage threshold alerts, server offline detection, web terminal, ZFS maintenance |
+| **v0.9.8** | Infrastructure | UPS monitoring (NUT), network management (bridges/bonds/VLANs), UPS mail alerts & shutdown rules, ZFS replication |
+| **v0.9.7** | Security & Activation | Runtime integrity guard, license phone-home, auto-downgrade on tampering, community activation with email verification |
+| **v0.9.5** | Settings & Updates | Dedicated updates tab, auto update check, security warnings, HTTPS toggle, cron auto-setup |
+| **v0.9.4** | Self-Update | Self-update system (8-phase engine), rollback, maintenance mode, PBS restore+, ZFS reports |
+| **v0.9.3** | Alert Split | Community/Pro+ alert rules split, ZFS cron Pro+ gate |
+| **v0.9.2** | Integrity | Code integrity (RSA-signed manifests, tamper detection), agent self-protection |
+| **v0.9.1** | Licensing | Effective tier, support expiry, piggyback refresh |
+| **v0.9.0** | Core | Dashboard, server management, VM/CT control, noVNC, updates, snapshots, ZFS, PBS, terminal, mail, SSL, DDNS, branding, licensing, agent v2.0 |
+
 ## Roadmap
 
-| Version | Feature | Tier |
-|---------|---------|------|
-| **v1.0.0** | VM/CT Provisioning — step-by-step wizard for creating VMs and containers | All |
-| **v1.1** | Firewall Management — PVE firewall rules and security groups | Pro+ |
-| **v1.2** | NAS Storage — Synology and QNAP integration | Pro+ |
-| **v1.3** | Notification Channels — Slack, Teams, Telegram, Discord | Pro+ |
-| **v1.4** | 2FA/TOTP + REST API & Webhooks | All / Enterprise+ |
-| **v1.5+** | LDAP/AD, HA Management, Scheduled Reports, Ceph, Ansible GUI | Enterprise+ |
+| Version | Feature | Tier | Status |
+|---------|---------|------|--------|
+| **v1.0.0** | VM/CT Provisioning — step-by-step wizard for creating VMs and containers | All | Next |
+| **v1.1** | Firewall Management — PVE firewall rules and security groups | Pro+ | Planned |
+| **v1.2** | NAS Storage — Synology and QNAP integration | Pro+ | Planned |
+| **v1.3** | Notification Channels — Slack, Teams, Telegram, Discord | Pro+ | Planned |
+| **v1.4** | 2FA/TOTP + REST API & Webhooks | All / Enterprise+ | Planned |
+| **v1.5+** | LDAP/AD, HA Management, Scheduled Reports, Ceph, Ansible GUI | Enterprise+ | Planned |
 
 Full roadmap: [floppyops.com/roadmap](https://floppyops.com/roadmap)
 
@@ -125,6 +151,18 @@ Scrubs und Trims pro Pool planen, SMART-Health-Daten ueberwachen, Pool-Status ve
 ### ZFS-Replikation (Enterprise+)
 Cross-Node ZFS-Replikation mit automatisiertem inkrementellen Send/Receive. Flexible Zeitplanung, Bandbreiten-Limitierung, Snapshot-Aufbewahrungsregeln, Echtzeit-Fortschrittsverfolgung und E-Mail-Alerts bei Fehlern.
 
+### USV-Monitoring (Pro+)
+USV-Geraete ueber Network UPS Tools (NUT) ueberwachen. Ladezustand, Laufzeit, Last, Ein-/Ausgangsspannung, Temperatur — mit sofortigen E-Mail-Alerts bei Stromereignissen (Batteriebetrieb, niedrig, offline). Dashboard Fleet-Tile und automatische Shutdown-Regeln.
+
+### Netzwerk-Verwaltung
+Vollstaendige PVE-Netzwerk-Interface-Verwaltung. Bridges, Bonds, VLANs und physische NICs ueber alle Cluster-Nodes hinweg verwalten. Pending-Changes Workflow, Live-Traffic-Monitoring (RX/TX pro Interface) und Netzwerk-Topologie-Uebersicht.
+
+### Live Health-Alerts & Storage-Monitoring
+Proaktives Server-Monitoring mit Live PVE API Polling. CPU, RAM, Disk und Storage-Schwellwerte werden automatisch geprueft mit konfigurierbarem Intervall (2–30 Minuten). Alle aktiven Storages (ZFS, CIFS, LVM) werden gegen Warn-/Kritisch-Schwellwerte ueberwacht. Server-Offline-Erkennung mit automatischer Status-Aktualisierung und professionellen HTML-Mail-Alerts.
+
+### Web-Terminal
+Befehle direkt auf Proxmox-Servern ausfuehren ueber die FloppyOps Web-Oberflaeche — kein separater SSH-Client noetig. Sichere Ausfuehrung via PVE Agent mit TLS und Token-basierter Authentifizierung.
+
 ### Agent-Architektur
 Ein leichtgewichtiger Python-Agent laeuft auf jedem Node. Die PVE-API uebernimmt Monitoring und VM-Steuerung, der Agent handhabt System-Operationen (Updates, Snapshots, ZFS, Terminal, Replikation). SSH wird nur fuer die Ersteinrichtung benoetigt.
 
@@ -145,16 +183,30 @@ Dark- und Light-Theme mit Standard- und Kompakt-Layout. Enterprise-Nutzer koenne
 
 ---
 
+### Releases
+
+| Version | Codename | Highlights |
+|---------|----------|------------|
+| **v0.9.9** | Health & Monitoring | Live Health-Alerts (PVE API Polling), Storage-Schwellwert-Alerts, Server-Offline-Erkennung, Web-Terminal, ZFS-Wartung |
+| **v0.9.8** | Infrastruktur | USV-Monitoring (NUT), Netzwerk-Management (Bridges/Bonds/VLANs), USV Mail-Alerts & Shutdown-Regeln, ZFS-Replikation |
+| **v0.9.7** | Sicherheit & Aktivierung | Runtime Integrity Guard, Lizenz Phone-Home, Auto-Downgrade bei Manipulation, Community-Aktivierung mit E-Mail-Verifizierung |
+| **v0.9.5** | Einstellungen & Updates | Eigener Updates-Tab, automatischer Update-Check, Sicherheitswarnungen, HTTPS-Toggle, Cron Auto-Setup |
+| **v0.9.4** | Self-Update | Self-Update System (8-Phasen-Engine), Rollback, Wartungsmodus, PBS Restore+, ZFS-Reports |
+| **v0.9.3** | Alert Split | Community/Pro+ Alert-Regeln Split, ZFS-Cron Pro+ Gate |
+| **v0.9.2** | Integritaet | Code-Integritaet (RSA-signierte Manifeste, Tamper-Detection), Agent-Selbstschutz |
+| **v0.9.1** | Lizenzierung | Effective Tier, Support-Ablauf, Piggyback-Refresh |
+| **v0.9.0** | Core | Dashboard, Server-Verwaltung, VM/CT-Steuerung, noVNC, Updates, Snapshots, ZFS, PBS, Terminal, Mail, SSL, DDNS, Branding, Lizenzmodell, Agent v2.0 |
+
 ### Roadmap
 
-| Version | Feature | Tier |
-|---------|---------|------|
-| **v1.0.0** | VM/CT Provisioning — Schritt-fuer-Schritt Wizard zum Erstellen von VMs und Containern | Alle |
-| **v1.1** | Firewall Management — PVE-Firewall-Regeln und Security Groups | Pro+ |
-| **v1.2** | NAS Storage — Synology- und QNAP-Integration | Pro+ |
-| **v1.3** | Benachrichtigungs-Kanaele — Slack, Teams, Telegram, Discord | Pro+ |
-| **v1.4** | 2FA/TOTP + REST API & Webhooks | Alle / Enterprise+ |
-| **v1.5+** | LDAP/AD, HA Management, Scheduled Reports, Ceph, Ansible GUI | Enterprise+ |
+| Version | Feature | Tier | Status |
+|---------|---------|------|--------|
+| **v1.0.0** | VM/CT Provisioning — Schritt-fuer-Schritt Wizard zum Erstellen von VMs und Containern | Alle | Naechstes |
+| **v1.1** | Firewall Management — PVE-Firewall-Regeln und Security Groups | Pro+ | Geplant |
+| **v1.2** | NAS Storage — Synology- und QNAP-Integration | Pro+ | Geplant |
+| **v1.3** | Benachrichtigungs-Kanaele — Slack, Teams, Telegram, Discord | Pro+ | Geplant |
+| **v1.4** | 2FA/TOTP + REST API & Webhooks | Alle / Enterprise+ | Geplant |
+| **v1.5+** | LDAP/AD, HA Management, Scheduled Reports, Ceph, Ansible GUI | Enterprise+ | Geplant |
 
 Vollstaendige Roadmap: [floppyops.com/roadmap](https://floppyops.com/roadmap)
 

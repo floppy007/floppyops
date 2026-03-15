@@ -5,6 +5,67 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ## [Unreleased]
 
+## [0.9.9-beta1] - 2026-03-14
+
+### Fixed
+- **Health-Alerts kamen zu spaet/gar nicht**: Cron nutzte nur `cached_stats` aus DB, die nur aktualisiert wurden wenn jemand die UI offen hatte. Jetzt werden **Live-Daten via PVE API** geholt
+- **Settings Save-Button blieb im Spinner haengen**: `apiFetch` gab bei Fehler `null` zurueck, Button wurde nie zurueckgesetzt. Jetzt mit try/catch + `.catch()` abgesichert
+- **Health-Check Dropdown zeigte gespeicherten Wert nicht an**: PHP numerische Array-Keys wurden zu int gecastet, strict-Vergleich mit DB-String schlug fehl. Fix: `(string)` Cast
+- **Dashboard PBS Warning-Spam**: `Undefined array key "host"` bei PBS-Server ohne Host-Feld spammte Apache error.log. Fix: Null-Coalescing `$pbs['host'] ?? ''`
+- **USV doppelte Offline-Mails**: `cached_status` wurde bei Unerreichbarkeit nicht aktualisiert — jede Minute neue Offline-Mail statt nur einmal. Jetzt wird `cached_status` auf `OFFLINE` gesetzt nach erstem Alert
+- **USV "wieder erreichbar"-Mail fehlte**: Nach Unerreichbarkeit (nicht Batterie) wurde keine back_online-Mail gesendet, da nur OB→OL geprueft wurde. Jetzt wird auch OFFLINE→OL erkannt
+- **Integritaets-Banner blieb nach Update stehen**: `runtimeGuard()` setzte `integrity_runtime_alert` bei Erkennung, raeumte das Flag aber nie auf wenn alle Dateien wieder OK waren. Jetzt werden stale Flags automatisch geloescht
+
+### Added
+- **Storage-Schwellwert-Alerts**: Cron prueft jetzt alle aktiven Storages gegen `disk_warning_threshold` und `disk_critical_threshold` aus Einstellungen — nicht mehr nur Root-Partition
+- **Server-Offline-Erkennung im Cron**: Wenn PVE API nicht erreichbar, wird `server_offline` Alert ausgeloest und Status in DB aktualisiert
+- **HTML Mail-Template `health-alert.php`**: Professionelles Dark-Theme Template mit Host-Warnungen (CPU/RAM/Disk) und Storage-Warnungen Tabelle, Farbkodierung nach Schwere
+- **Health-Check Intervall einstellbar**: Neues Dropdown unter Settings > Allgemein (2/3/4/5/10/15/20/30 Min, Default 3 Min). Wird in `app_settings.health_check_interval` gespeichert und vom Cron gelesen
+- 15 neue i18n-Keys (`mail.health_*`, `settings.health_*`) in EN + DE
+
+### Changed
+- **Health-Alert Cron aktualisiert cached_stats**: Beim Live-Polling werden die Stats gleich in die DB geschrieben — Dashboard profitiert auch ohne offene Detail-Seite
+- **Crontab auf `* * * * *`**: Cron laeuft jede Minute, Health-Check Intervall wird ueber `app_settings` gesteuert (Default 3 Min)
+- **Settings-Formular mit `autocomplete="off"`**: Verhindert Bitwarden/Autofill-Crashes beim Speichern
+- **USV Mail-Betreff mit Uhrzeit**: Datum + Uhrzeit wird an den Subject angehaengt fuer bessere Zuordnung
+
+## [0.9.8-beta3] - 2026-03-12
+
+### Fixed
+- **Self-Update ueberschreibt neue Dateien mit altem Hotfix**: `autoApplyLatestPatch()` nutzte `APP_VERSION` (alte Version zur Laufzeit) statt die neue Zielversion — lud Hotfix der alten Version und ueberschrieb damit die gerade installierten neuen Dateien
+- **SSE Update-Stream Timeout**: `set_time_limit(0)` und `ignore_user_abort(true)` fehlten im SSE-Handler — bei langen Updates konnte PHP den Prozess nach 30s abbrechen
+
+## [0.9.8-beta2] - 2026-03-12
+
+### Fixed
+- **Integritaets-Alarm nach Update**: Guard-Cache wurde VOR Hotfix-Apply regeneriert — nach Update erschien faelschlicherweise "Code-Integritaetsverletzung". Guard-Cache und Alert-Flags werden jetzt NACH Patches zurueckgesetzt
+- **"Update verfuegbar" nach Update**: Update-Cache (`update_available`) wurde nach erfolgreichem Update nicht geleert — UI zeigte weiter "Update verfuegbar" fuer die gerade installierte Version
+
+## [0.9.8-beta1] - 2026-03-12
+
+### Added
+- **USV Mail-Alerts**: HTML-Mail-Template (`ups-alert.php`) mit Batterie/Last-Balken, Runtime, Input/Output V, Temperatur — nutzt globales Template-System (`sendTemplate()`)
+- **USV Alert-Regeln** (Schema v34): 4 Standard-Regeln (`ups_on_battery`, `ups_low_battery`, `ups_offline`, `ups_back_online`) mit konfigurierbarem Empfaenger
+- **USV Karten erweitert**: Groessere Gauges (110px), Runtime-Fortschrittsbalken, Stats-Grid (Temp, Bat.Spg., Frequenz, Leistung), groesserer Spark-Chart (48px)
+- 16 neue i18n-Keys (`ups.mail_*`, `ups.runtime`, `ups.frequency`, `ups.power_va`, `ups.battery_voltage_short`) in EN + DE
+
+### Fixed
+- **USV Cron SQL-Fehler**: `s.node_name` Spalte existiert nicht in `servers` — crashte Shutdown-Regeln nach Batterie-Alert
+- **USV Cron Mail**: Pruefte `smtp_host` statt `host` — Mail wurde nie gesendet
+- **Dashboard Disk-Picker**: `clusterSelected.length >= 0` immer true — Cluster-Auswahl wurde ueberschrieben
+- **ZFS Replikation**: GUID-Validierung beim Inkremental-Check — erkennt Snapshot-Mismatch (gleicher Name, unterschiedliche GUID) und faellt automatisch auf Full-Send zurueck statt zu scheitern
+- **ZFS Replikation**: Mehrzeilige ZFS-Fehlermeldungen crashten den Status-Updater (Python SyntaxError) — Fehler werden jetzt via Temp-Datei uebergeben statt Shell-String-Interpolation
+- **PVE Agent 2.5.0**: Beide Replication-Fixes im Agent-Script
+- **ZFS Replikation**: Config-Sync nutzt jetzt Base64-Encoding statt Shell-echo (verhindert Command-Injection ueber VM-Config-Inhalte)
+- **ZFS Replikation**: Agent-Auto-Update wird jetzt erst nach Source-Validierung ausgefuehrt (vermeidet unnoetige Restarts)
+- Community-Ping wertet jetzt Server-Antwort aus — bei Admin-Deaktivierung wird lokale Registrierung entfernt
+- Verification-Code-E-Mail nutzt jetzt App-Sprache statt englischem Fallback
+- Server-Ping ueberschreibt `is_active` nicht mehr (Admin-Deaktivierung bleibt bestehen)
+
+## [0.9.7-beta7] - 2026-03-06
+
+## [0.9.7-beta6] - 2026-03-06
+
 ## [0.9.7-beta5] - 2026-03-05
 
 ### Added
